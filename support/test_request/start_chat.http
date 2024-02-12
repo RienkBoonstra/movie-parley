@@ -1,1 +1,7 @@
 POST localhost:8080/chat
+content-type: application/json
+
+{
+  "text": "Hi"
+}
+

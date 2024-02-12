@@ -4,6 +4,7 @@ import com.movieparley.backend.chat.application.port.in.StartChatUseCase;
 import com.movieparley.backend.chat.application.domain.model.Utterance;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -16,7 +17,7 @@ public class ChatController {
     }
 
     @PostMapping("chat")
-    public ResponseEntity<StartChatUseCase.StartChatResponse> startChat(Utterance utterance) {
+    public ResponseEntity<StartChatUseCase.StartChatResponse> startChat(@RequestBody Utterance utterance) {
         StartChatUseCase.StartChatResponse response = startChatUseCase.startChat(utterance);
         return ResponseEntity.ok(response);
     }

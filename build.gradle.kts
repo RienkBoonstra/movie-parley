@@ -1,3 +1,5 @@
+val awssdk_version = "2.20.80"
+
 plugins {
     java
     id("org.springframework.boot") version "3.2.2"
@@ -29,6 +31,9 @@ dependencies {
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     implementation("org.springframework.boot:spring-boot-starter-actuator")
+    implementation("software.amazon.awssdk:lexruntimev2:$awssdk_version")
+    implementation("software.amazon.awssdk:auth:$awssdk_version")
+    implementation("software.amazon.awssdk:regions:$awssdk_version")
 }
 
 tasks.withType<Test> {

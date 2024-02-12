@@ -1,10 +1,14 @@
 package com.movieparley.backend.chat.application.domain.service;
 
+import com.movieparley.backend.chat.application.domain.model.Chat;
+import com.movieparley.backend.chat.application.domain.model.ChatID;
 import com.movieparley.backend.chat.application.domain.model.Utterance;
 import com.movieparley.backend.chat.application.port.in.StartChatUseCase;
 import com.movieparley.backend.chat.application.port.out.ChatRepositoryPort;
 import com.movieparley.backend.chat.application.port.out.MovieStarResponsePort;
 import org.springframework.stereotype.Component;
+
+import java.util.UUID;
 
 @Component
 public class StartChatService implements StartChatUseCase {
@@ -19,6 +23,9 @@ public class StartChatService implements StartChatUseCase {
     }
 
     public StartChatResponse startChat(Utterance utterance) {
-        return null;
+        ChatID chatId = new ChatID(UUID.randomUUID());
+        Utterance response = movieStarResponsePort.respondTo(utterance);
+        // TODO: persist the chat
+        return new StartChatResponse(response, chatId);
     }
 }

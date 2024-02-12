@@ -2,3 +2,14 @@ spring:
   data:
     mongodb:
       uri: mongodb://${MONGODB_HOSTNAME:localhost}:27017/movie_parley
+
+ai:
+  chatbot:
+    aws:
+      lex:
+        botId: HJBLJISIIV
+        botAliasId: TSTALIASID
+        localeId: en_US
+        accessKey: ${AWS_LEX_ACCESS_KEY_ID}
+        secretKey: ${AWS_LEX_SECRET_ACCESS_KEY}
+        region: eu-west-1
