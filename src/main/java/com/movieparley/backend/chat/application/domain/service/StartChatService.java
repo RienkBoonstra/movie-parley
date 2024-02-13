@@ -1,10 +1,9 @@
 package com.movieparley.backend.chat.application.domain.service;
 
 import com.movieparley.backend.chat.application.domain.model.Chat;
-import com.movieparley.backend.chat.application.domain.model.ChatID;
 import com.movieparley.backend.chat.application.domain.model.Utterance;
 import com.movieparley.backend.chat.application.port.in.StartChatUseCase;
-import com.movieparley.backend.chat.application.port.out.ChatRepositoryPort;
+import com.movieparley.backend.chat.application.port.out.StoreNewChatPort;
 import com.movieparley.backend.chat.application.port.out.MovieStarResponsePort;
 import org.springframework.stereotype.Component;
 
@@ -15,17 +14,17 @@ public class StartChatService implements StartChatUseCase {
 
     private final MovieStarResponsePort movieStarResponsePort;
 
-    private final ChatRepositoryPort chatRepositoryPort;
+    private final StoreNewChatPort storeNewChatPort;
 
-    public StartChatService(MovieStarResponsePort movieStarResponsePort, ChatRepositoryPort chatRepositoryPort) {
+    public StartChatService(MovieStarResponsePort movieStarResponsePort, StoreNewChatPort storeNewChatPort) {
         this.movieStarResponsePort = movieStarResponsePort;
-        this.chatRepositoryPort = chatRepositoryPort;
+        this.storeNewChatPort = storeNewChatPort;
     }
 
     public StartChatResponse startChat(Utterance utterance) {
-        ChatID chatId = new ChatID(UUID.randomUUID());
+        Chat.ChatID chatId = new Chat.ChatID(UUID.randomUUID().toString());
         Utterance response = movieStarResponsePort.respondTo(utterance);
-        // TODO: persist the chat
+        storeNewChatPort.store(new Chat(chatId));
         return new StartChatResponse(response, chatId);
     }
 }
