@@ -3,6 +3,7 @@ package com.movieparley.backend.chat.adapter.in;
 import com.movieparley.backend.chat.application.port.in.StartChatUseCase;
 import com.movieparley.backend.chat.application.domain.model.Utterance;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,6 +15,11 @@ public class ChatController {
 
     public ChatController(StartChatUseCase startChatUseCase) {
         this.startChatUseCase = startChatUseCase;
+    }
+
+    @GetMapping("dead_or_alive")
+    public String deadOrAlive() {
+        return "Oh, god still alive!";
     }
 
     @PostMapping("chat")
