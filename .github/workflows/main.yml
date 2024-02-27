@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - main
+      - deploy-to-digital-ocean
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -40,3 +41,18 @@ jobs:
         with:
           push: true
           tags: baddockerhub/movie_parley:latest
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install doctl
+        uses: digitalocean/action-doctl@v2
+        with:
+          token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+
+      - name: Deploy to Digital Ocean
+        run: doctl kubernetes cluster kubeconfig save movie-parley
+             # Dit hjirre under hoecht allinich as sa'n cluster, opnei makest
+             # kubectl create secret docker-registry dockerhub-reg-cred --docker-server=https://index.docker.io/v1/ 
+             # --docker-username=baddockerhub --docker-password=$DOCKERHUB_PASSWORD --docker-email=$DOCKERHUB_EMAIL
+             kubectl apply -f deployment/digitalocean/deployment.yaml
