@@ -49,6 +49,7 @@ jobs:
         uses: digitalocean/action-doctl@v2
         with:
           token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+
       - name: Deploy to Digital Ocean
         run: doctl kubernetes cluster kubeconfig save movie-parley
              # Dit hjirre under hoecht allinich as sa'n cluster, opnei makest
