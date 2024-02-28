@@ -5,42 +5,42 @@ on:
       - main
       - deploy-to-digital-ocean
 jobs:
-#  build:
-#    runs-on: ubuntu-latest
-#    steps:
-#      - uses: actions/checkout@v4
-#      - uses: actions/setup-java@v3
-#        with:
-#          java-version: '17'
-#          distribution: 'temurin'
-#
-#      - name: Setup Gradle
-#        uses: gradle/actions/setup-gradle@417ae3ccd767c252f5661f1ace9f835f9654f2b5 # v3.1.0
-#
-#      - name: Build with Gradle
-#        run: ./gradlew build
-#      # deploy to digital ocean
-#  docker:
-#    runs-on: ubuntu-latest
-#    steps:
-#      -
-#        name: Set up QEMU
-#        uses: docker/setup-qemu-action@v3
-#      -
-#        name: Set up Docker Buildx
-#        uses: docker/setup-buildx-action@v3
-#      -
-#        name: Login to Docker Hub
-#        uses: docker/login-action@v3
-#        with:
-#          username: ${{ secrets.DOCKERHUB_USERNAME }}
-#          password: ${{ secrets.DOCKERHUB_TOKEN }}
-#      -
-#        name: Build and push
-#        uses: docker/build-push-action@v5
-#        with:
-#          push: true
-#          tags: baddockerhub/movie_parley:latest
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@417ae3ccd767c252f5661f1ace9f835f9654f2b5 # v3.1.0
+
+      - name: Build with Gradle
+        run: ./gradlew build
+      # deploy to digital ocean
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+      -
+        name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+      -
+        name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      -
+        name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      -
+        name: Build and push
+        uses: docker/build-push-action@v5
+        with:
+          push: true
+          tags: baddockerhub/movie_parley:latest
   deploy:
     #needs: docker
     runs-on: ubuntu-latest
@@ -53,8 +53,7 @@ jobs:
       - name: Deploy to Digital Ocean
         run: |
           doctl kubernetes cluster kubeconfig save movie-parley
-          ls
-          kubectl apply -f ./deployment/digital_ocean/deployment.yml
+          kubectl apply -f deployment/digital_ocean/deployment.yml
         # Dit hjirre under hoecht allinich as sa'n cluster, opnei makest
         # kubectl create secret docker-registry dockerhub-reg-cred --docker-server=https://index.docker.io/v1/
         # --docker-username=baddockerhub --docker-password=$DOCKERHUB_PASSWORD --docker-email=$DOCKERHUB_EMAIL
