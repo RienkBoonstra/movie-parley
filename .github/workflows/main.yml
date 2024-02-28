@@ -53,7 +53,7 @@ jobs:
       - name: Deploy to Digital Ocean
         run: |
           doctl kubernetes cluster kubeconfig save movie-parley
-          kubectl apply -f deployment/digital_ocean/deployment.yml
+          kubectl apply -f ../..deployment/digital_ocean/deployment.yml
         # Dit hjirre under hoecht allinich as sa'n cluster, opnei makest
         # kubectl create secret docker-registry dockerhub-reg-cred --docker-server=https://index.docker.io/v1/
         # --docker-username=baddockerhub --docker-password=$DOCKERHUB_PASSWORD --docker-email=$DOCKERHUB_EMAIL
