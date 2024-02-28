@@ -42,7 +42,7 @@ jobs:
           push: true
           tags: baddockerhub/movie_parley:latest
   deploy:
-    #needs: docker
+    needs: docker
     runs-on: ubuntu-latest
     steps:
       - name: Install doctl
