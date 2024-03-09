@@ -1,6 +1,8 @@
 package com.movieparley.backend.chat.adapter.out.ai.chatbot.aws;
 
-import com.movieparley.backend.chat.adapter.out.ai.chatbot.ChatbotClient;
+import com.movieparley.backend.chat.application.domain.model.Utterance;
+import com.movieparley.backend.chat.application.port.out.MovieStarResponsePort;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
 import software.amazon.awssdk.auth.credentials.AwsCredentialsProvider;
@@ -12,16 +14,18 @@ import software.amazon.awssdk.services.lexruntimev2.model.RecognizeTextResponse;
 
 import java.util.UUID;
 
+@Profile("aws")
 @Component
-public class AWSLexClient implements ChatbotClient {
-
+public class AWSLexAdapter implements MovieStarResponsePort {
     private final AWSLexClientProperties properties;
 
-    public AWSLexClient(AWSLexClientProperties properties) {
+    public AWSLexAdapter(AWSLexClientProperties properties) {
         this.properties = properties;
     }
+
     @Override
-    public String recognizeIntent(String text) {
+    public Utterance respondTo(Utterance utterance) {
+
         String sessionId = UUID.randomUUID().toString();
         Region region = Region.of(properties.region());
 
@@ -34,7 +38,8 @@ public class AWSLexClient implements ChatbotClient {
                 .region(region)
                 .build();
 
-        RecognizeTextRequest recognizeTextRequest = getRecognizeTextRequest(properties.botId(), properties.botAliasId(), properties.localeId(), sessionId, text);
+        RecognizeTextRequest recognizeTextRequest = getRecognizeTextRequest(properties.botId(),
+                properties.botAliasId(), properties.localeId(), sessionId, utterance.text());
         RecognizeTextResponse recognizeTextResponse = lexV2Client.recognizeText(recognizeTextRequest);
 
         var response = new StringBuilder();
@@ -42,8 +47,9 @@ public class AWSLexClient implements ChatbotClient {
             response.append(message.content());
         });
 
-        return response.toString();
+        return new Utterance(response.toString());
     }
+
     private RecognizeTextRequest getRecognizeTextRequest(String botId, String botAliasId, String localeId, String sessionId, String userInput) {
         return RecognizeTextRequest.builder()
                 .botAliasId(botAliasId)
