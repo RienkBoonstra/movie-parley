@@ -6,3 +6,7 @@ If you run movieparley-backend locally, but from a docker container be sure to c
 network defined in the compose.yml and supply the MONGODB_HOSTNAME environment variable, like so:
 ```docker run --rm --network movie-parley-network -e MONGODB_HOSTNAME=mongodb <image-name>.```
 
+## Spring profiles
+Add a spring profile via environment variables like so:
+docker run -p 8080:8080 -e SPRING_PROFILES_ACTIVE=<profiles> movieparley-backend:latest
+

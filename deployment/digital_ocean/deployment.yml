@@ -1,36 +1,36 @@
-kind: Service
 apiVersion: v1
+kind: Service
 metadata:
-  name: movieparley-backend
+  name: my-python-app-lb
 spec:
   type: LoadBalancer
   selector:
-    app: movieparley-backend
+    app: my-python-app
   ports:
     - name: http
       protocol: TCP
-      port: 8080
-      targetPort: 8080
+      port: 80
+      targetPort: 80
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: movieparley-backend
+  name: my-python-app-deployment
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: movieparley-backend
+      app: my-python-app
   template:
     metadata:
       labels:
-        app: movieparley-backend
+        app: my-python-app
     spec:
       imagePullSecrets:
-        - name: dockerhub-reg-cred
+        - name: regcred
       containers:
-        - name: nginx
-          image: baddockerhub/movie-parley:latest
+        - name: my-python-app
+          image: baddockerhub/my-python-app
           ports:
-            - containerPort: 8080
+            - containerPort: 80
               protocol: TCP
