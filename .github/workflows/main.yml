@@ -61,7 +61,7 @@ jobs:
           # authorize kubectl to execute on the cluster
           doctl kubernetes cluster kubeconfig save my-python-app-cluster
           # authorize the cluster to download from docker hub
-          if kubectl get secret regcred; then 
+          if ![[ kubectl get secret regcred]]; then 
             kubectl create secret generic regcred --from-file=.dockerconfigjson=/home/runner/.docker/config.json --type=kubernetes.io/dockerconfigjson
           fi  
           # apply the deployment file
