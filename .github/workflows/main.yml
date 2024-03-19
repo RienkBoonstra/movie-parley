@@ -61,6 +61,7 @@ jobs:
           # authorize kubectl to execute on the cluster
           doctl kubernetes cluster kubeconfig save my-python-app-cluster
           # authorize the cluster to download from docker hub
-          kubectl create secret generic regcred --from-file=.dockerconfigjson=~/.docker/config.json --type=kubernetes.io/dockerconfigjson
+          pwd
+          #kubectl create secret generic regcred --from-file=.dockerconfigjson=~/.docker/config.json --type=kubernetes.io/dockerconfigjson
           # apply the deployment file
-          kubectl apply -f deployment/digital_ocean/deployment.yml
+          #kubectl apply -f deployment/digital_ocean/deployment.yml
