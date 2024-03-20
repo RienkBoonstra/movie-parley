@@ -61,7 +61,6 @@ jobs:
           # authorize kubectl to execute on the cluster
           doctl kubernetes cluster kubeconfig save movie-parley-cluster
           # authorize the cluster to download from docker hub
-          kubectl delete secret regcred
           kubectl create secret generic regcred --from-file=.dockerconfigjson=/home/runner/.docker/config.json --type=kubernetes.io/dockerconfigjson
           # apply the deployment file
           kubectl apply -f deployment/digital_ocean/deployment.yml
