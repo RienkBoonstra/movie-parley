@@ -60,10 +60,6 @@ jobs:
         run: |
           # authorize kubectl to execute on the cluster
           doctl kubernetes cluster kubeconfig save movie-parley-cluster
-          #kubectl create secret generic regcred --from-file=.dockerconfigjson=/home/frank/.docker/config.json 
-          #--type=kubernetes.io/dockerconfigjson
-          echo "before secret output"
-          kubectl get secret
-          echo "after secret output" 
-          # the cluster should already be authorized to download from dockerhub
+          # the cluster should already be authorized to download from dockerhub. Otherwise take care of that first from 
+          # the command line
           kubectl apply -f deployment/digital_ocean/deployment.yml
