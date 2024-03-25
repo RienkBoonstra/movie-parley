@@ -30,7 +30,7 @@ spec:
         - name: regcred
       containers:
         - name: movie-parley
-          image: baddockerhub/movieparley-backend:dummy
+          image: baddockerhub/movieparley-backend:lex_to_outside
           ports:
             - containerPort: 8080
               protocol: TCP
