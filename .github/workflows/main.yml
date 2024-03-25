@@ -3,7 +3,7 @@ on:
   push:
     branches:
       - main
-      - deploy-to-digital-ocean
+      - connect_to_aws_from_cluster
 jobs:
   build:
     runs-on: ubuntu-latest
