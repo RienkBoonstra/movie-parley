@@ -2,6 +2,7 @@ package com.movieparley.backend.chat.adapter.out.ai.chatbot.aws;
 
 import com.movieparley.backend.chat.application.domain.model.Utterance;
 import com.movieparley.backend.chat.application.port.out.MovieStarResponsePort;
+import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
@@ -15,6 +16,7 @@ import software.amazon.awssdk.services.lexruntimev2.model.RecognizeTextResponse;
 import java.util.UUID;
 
 @Profile("aws")
+@Primary
 @Component
 public class AWSLexAdapter implements MovieStarResponsePort {
     private final AWSLexClientProperties properties;
