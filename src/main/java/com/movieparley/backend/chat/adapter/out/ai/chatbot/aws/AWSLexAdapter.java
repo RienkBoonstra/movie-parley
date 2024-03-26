@@ -13,6 +13,8 @@ import software.amazon.awssdk.services.lexruntimev2.LexRuntimeV2Client;
 import software.amazon.awssdk.services.lexruntimev2.model.RecognizeTextRequest;
 import software.amazon.awssdk.services.lexruntimev2.model.RecognizeTextResponse;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.UUID;
 
 @Profile("aws")
@@ -39,11 +41,14 @@ public class AWSLexAdapter implements MovieStarResponsePort {
                 .builder()
                 .credentialsProvider(awsCredentialsProvider)
                 .region(region)
+                .endpointOverride(new URI("https://aws-lex-service"))
                 .build()) {
 
             RecognizeTextRequest recognizeTextRequest = getRecognizeTextRequest(properties.botId(),
                     properties.botAliasId(), properties.localeId(), sessionId, utterance.text());
             recognizeTextResponse = lexV2Client.recognizeText(recognizeTextRequest);
+        } catch (URISyntaxException e) {
+            throw new RuntimeException(e);
         }
 
         var response = new StringBuilder();
