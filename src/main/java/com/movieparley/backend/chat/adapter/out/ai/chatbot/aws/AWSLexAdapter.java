@@ -34,15 +34,17 @@ public class AWSLexAdapter implements MovieStarResponsePort {
         AwsBasicCredentials awsCreds = AwsBasicCredentials.create(properties.accessKey(), properties.secretKey());
         AwsCredentialsProvider awsCredentialsProvider = StaticCredentialsProvider.create(awsCreds);
 
-        LexRuntimeV2Client lexV2Client = LexRuntimeV2Client
+        RecognizeTextResponse recognizeTextResponse;
+        try (LexRuntimeV2Client lexV2Client = LexRuntimeV2Client
                 .builder()
                 .credentialsProvider(awsCredentialsProvider)
                 .region(region)
-                .build();
+                .build()) {
 
-        RecognizeTextRequest recognizeTextRequest = getRecognizeTextRequest(properties.botId(),
-                properties.botAliasId(), properties.localeId(), sessionId, utterance.text());
-        RecognizeTextResponse recognizeTextResponse = lexV2Client.recognizeText(recognizeTextRequest);
+            RecognizeTextRequest recognizeTextRequest = getRecognizeTextRequest(properties.botId(),
+                    properties.botAliasId(), properties.localeId(), sessionId, utterance.text());
+            recognizeTextResponse = lexV2Client.recognizeText(recognizeTextRequest);
+        }
 
         var response = new StringBuilder();
         recognizeTextResponse.messages().forEach(message -> {
