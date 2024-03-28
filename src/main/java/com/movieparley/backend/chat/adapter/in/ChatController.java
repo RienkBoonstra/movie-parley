@@ -17,10 +17,6 @@ public class ChatController {
         this.startChatUseCase = startChatUseCase;
     }
 
-    @GetMapping("dead_or_alive")
-    public String deadOrAlive() {
-        return "Oh, god still alive!";
-    }
 
     @PostMapping("chat")
     public ResponseEntity<StartChatUseCase.StartChatResponse> startChat(@RequestBody Utterance utterance) {

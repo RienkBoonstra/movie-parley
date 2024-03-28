@@ -38,6 +38,8 @@ jobs:
       -
         name: Build and push
         uses: docker/build-push-action@v5
+        env:
+          APP_VERSION: ${{ github.run_number }}
         with:
           push: true
           tags: baddockerhub/movie_parley:${{github.run_number}}

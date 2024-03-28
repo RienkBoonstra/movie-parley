@@ -31,6 +31,9 @@ spec:
       containers:
         - name: movie-parley
           image: baddockerhub/movieparley-backend:lex_to_outside
+          env:
+            - name: APP_VERSION
+              value: "no-app-version-provided-for-deployment"
           ports:
             - containerPort: 8080
               protocol: TCP
