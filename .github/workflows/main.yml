@@ -38,8 +38,6 @@ jobs:
       -
         name: Build and push
         uses: docker/build-push-action@v5
-        env:
-          APP_VERSION: ${{ github.run_number }}
         with:
           push: true
           tags: baddockerhub/movie_parley:${{github.run_number}}
@@ -64,4 +62,5 @@ jobs:
           doctl kubernetes cluster kubeconfig save movie-parley-cluster
           # the cluster should already be authorized to download from dockerhub. Otherwise take care of that first from 
           # the command line
+          sed -i -e "s/\app-version-placeholder/${{ github.run_number }}/" deployment/digital_ocean/deployment.yml
           kubectl apply -f deployment/digital_ocean/deployment.yml
