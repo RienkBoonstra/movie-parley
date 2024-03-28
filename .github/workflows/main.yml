@@ -63,5 +63,4 @@ jobs:
           # the cluster should already be authorized to download from dockerhub. Otherwise take care of that first from 
           # the command line
           sed -i -e "s/app-version-placeholder/${{ github.run_number }}/g" deployment/digital_ocean/deployment.yml
-          cat deployment/digital_ocean/deployment.yml
-          # kubectl apply -f deployment/digital_ocean/deployment.yml
+          kubectl apply -f deployment/digital_ocean/deployment.yml
